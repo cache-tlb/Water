@@ -3,6 +3,7 @@
 #include "StdHeader.h"
 #include "GLHeader.h"
 #include "vsShaderLib.h"
+#include "vec3.h"
 
 class Mesh {
 public:
@@ -38,12 +39,11 @@ private:
 
 class Indexer {
 public:
-    typedef std::tuple<float,float,float> KeyType;
     Indexer(){}
     ~Indexer(){}
-    int add(KeyType &v);
-    std::vector<KeyType> unique;
-    std::map<KeyType,int> map_;
+    int add(const Vector &v);
+    std::vector<Vector> unique;
+    std::map<Vector,int> map_;
 private:
 };
 

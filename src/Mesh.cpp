@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-int Indexer::add(KeyType &v) {
+int Indexer::add(const Vector &v) {
     if (map_.count(v) <= 0) {
         map_[v] = unique.size();
         unique.push_back(v);
@@ -138,7 +138,7 @@ Mesh *Mesh::sphere(int detail /* = 6 */) {
                 double invlen = 1.0 / sqrt(double(vx*vx + vy*vy + vz*vz));
                 vx *= (invlen*sx); vy *= (invlen*sy); vz *= (invlen*sz);
                 // TODO: coords
-                data.push_back(indexer.add(std::make_tuple(vx,vy,vz)));
+                data.push_back(indexer.add(Vector(vx,vy,vz)));
             }
 
             // Generate triangles from this row and the previous row.
@@ -164,19 +164,13 @@ Mesh *Mesh::sphere(int detail /* = 6 */) {
     // Reconstruct the geometry from the indexer.
     for (int i = 0; i < indexer.unique.size(); i++) {
         auto &v = indexer.unique[i];
-        mesh->vertices.push_back(std::get<0>(v));
-        mesh->vertices.push_back(std::get<1>(v));
-        mesh->vertices.push_back(std::get<2>(v));
+        mesh->vertices.push_back(v.x);
+        mesh->vertices.push_back(v.y);
+        mesh->vertices.push_back(v.z);
         // TODO: coords
         // TODO: normals
     }
 
     mesh->compile();
     return mesh;
-}
-
-bool operator < (const Indexer::KeyType &a, const Indexer::KeyType &b) {
-    float a0 = std::get<0>(a), a1 = std::get<1>(a), a2 = std::get<2>(a);
-    float b0 = std::get<0>(b), b1 = std::get<1>(b), b2 = std::get<2>(b);
-    return (a0 < b0) || (a0 == b0 && a1 < b1) || (a0 == b0 && a1 == b1 && a2 < b2);
 }

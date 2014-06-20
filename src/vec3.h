@@ -6,6 +6,7 @@ public:
     Vector(const Vector &v);
 
     Vector & operator = (const Vector &rhs);
+    bool operator < (const Vector &that) const;
     Vector unit() const;
     double length() const;
     float dot(const Vector &v) const;

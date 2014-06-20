@@ -19,6 +19,10 @@ Vector & Vector::operator=(const Vector &rhs) {
     return *this;
 }
 
+bool Vector::operator< (const Vector &that) const{
+    return (x < that.x) || (x == that.x && y < that.y) || (x == that.x && y == that.y && z < that.z);
+}
+
 double Vector::length() const{
     return sqrt(x*x + y*y + z*z);
 }
