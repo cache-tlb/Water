@@ -4,10 +4,10 @@ uniform mat4 LIGHTGLgl_ModelViewMatrix;
 uniform mat4 LIGHTGLgl_ProjectionMatrix;
 uniform mat4 LIGHTGLgl_ModelViewProjectionMatrix;
 
-attribute vec4 LIGHTGLgl_Vertex;
-attribute vec4 LIGHTGLgl_TexCoord;
-attribute vec3 LIGHTGLgl_Normal;
-attribute vec4 LIGHTGLgl_Color;
+in vec4 LIGHTGLgl_Vertex;
+in vec4 LIGHTGLgl_TexCoord;
+in vec3 LIGHTGLgl_Normal;
+in vec4 LIGHTGLgl_Color;
 vec4 ftransform() {
     return LIGHTGLgl_ModelViewProjectionMatrix * LIGHTGLgl_Vertex;
 }
@@ -29,9 +29,9 @@ vec2 intersectCube(vec3 origin, vec3 ray, vec3 cubeMin, vec3 cubeMax) {
     return vec2(tNear, tFar);
 }
 
-varying vec3 oldPos;
-varying vec3 newPos;
-varying vec3 ray;
+out vec3 oldPos;
+out vec3 newPos;
+out vec3 ray;
 
 /* project the ray onto the plane */
 vec3 project(vec3 origin, vec3 ray, vec3 refractedLight) {

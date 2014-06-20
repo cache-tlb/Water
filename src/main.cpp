@@ -57,6 +57,7 @@ const int MODE_MOVE_SPHERE = 1;
 const int MODE_ORBIT_CAMERA = 2;
 int oldX, oldY;
 int winWidth, winHeight;
+float min_interval = 1./75;
 
 void resize(int w, int h) {
 	float fov;
@@ -267,8 +268,10 @@ void initScene() {
 
 void idle(){
     int nextTime = glutGet(GLUT_ELAPSED_TIME);
+    float interval = float(nextTime - prevTime) / 1000.f;
+    if (interval < min_interval) return;
     if (!paused) {
-        update(float(nextTime - prevTime) / 1000.f);
+        update(interval);
         draw();
     }
     prevTime = nextTime;
@@ -283,7 +286,7 @@ int main(int argc, char **argv) {
 
 	glutInitContextVersion (3, 3);
 	glutInitContextProfile (GLUT_CORE_PROFILE );
-	glutInitContextFlags(GLUT_DEBUG);
+	//glutInitContextFlags(GLUT_DEBUG);
 
 	glutInitWindowPosition(100,100);
 	glutInitWindowSize(512,512);

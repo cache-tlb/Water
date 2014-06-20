@@ -96,12 +96,13 @@ vec3 getWallColor(vec3 point) {
     return wallColor * scale;
 }
 
-varying vec3 position;
+in vec3 position;
+out vec4 outputF;
 
 void main() {
-    gl_FragColor = vec4(getWallColor(position), 1.0);
+    outputF = vec4(getWallColor(position), 1.0);
     vec4 info = texture2D(water, position.xz * 0.5 + 0.5);
     if (position.y < info.r) {
-        gl_FragColor.rgb *= underwaterColor * 1.2;
+        outputF.rgb *= underwaterColor * 1.2;
     }
 }

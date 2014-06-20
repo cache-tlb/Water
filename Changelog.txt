@@ -1,2 +1,3 @@
 [2014-06-20]
-Replace the built-in function `textureCube' with `texture' in RendererAboveWater.frag and RendererUnderWater.frag so that it works on Nvidia video cards.
+1. Replace the built-in function `textureCube' with `texture' in RendererAboveWater.frag and RendererUnderWater.frag so that it works on Nvidia video cards.
+2. set program output for the shaders, the gl_FragColor is deprecated.

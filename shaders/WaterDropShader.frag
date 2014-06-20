@@ -11,8 +11,8 @@ uniform sampler2D texture;
 uniform vec2 center;
 uniform float radius;
 uniform float strength;
-varying vec2 coord;
-
+in vec2 coord;
+out vec4 outputF;
 void main() {
 	/* get vertex info */
 	vec4 info = texture2D(texture, coord);
@@ -22,5 +22,5 @@ void main() {
 	drop = 0.5 - cos(drop * PI) * 0.5;
 	info.r += drop * strength;
 
-	gl_FragColor = info;
+	outputF = info;
 }

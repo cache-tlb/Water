@@ -102,7 +102,6 @@ void Renderer::renderCube(Water *water) {
 }
 
 void Renderer::renderWater(Water *water, Cubemap *sky) {
-    // todo
     RayTracer tracer;
     float eye_array[3]; tracer.eye.toArray(eye_array);
     water->textureA->bind(0);

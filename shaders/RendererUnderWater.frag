@@ -99,7 +99,7 @@ vec3 getWallColor(vec3 point) {
 }
 
 uniform vec3 eye;
-varying vec3 position;
+in vec3 position;
 uniform samplerCube sky;
 
 vec3 getSurfaceRayColor(vec3 origin, vec3 ray, vec3 waterColor) {
@@ -124,7 +124,7 @@ vec3 getSurfaceRayColor(vec3 origin, vec3 ray, vec3 waterColor) {
 	if (ray.y < 0.0) color *= waterColor;
 	return color;
 }
-
+out vec4 outputF;
 void main() {
 	vec2 coord = position.xz * 0.5 + 0.5;
 	vec4 info = texture2D(water, coord);
@@ -145,5 +145,5 @@ void main() {
 
 	vec3 reflectedColor = getSurfaceRayColor(position, reflectedRay, underwaterColor);
 	vec3 refractedColor = getSurfaceRayColor(position, refractedRay, vec3(1.0)) * vec3(0.8, 1.0, 1.1);
-	gl_FragColor = vec4(mix(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
+	outputF = vec4(mix(reflectedColor, refractedColor, (1.0 - fresnel) * length(refractedRay)), 1.0);
 }

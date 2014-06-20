@@ -9,7 +9,7 @@
  uniform vec3 oldCenter;    
  uniform vec3 newCenter;    
  uniform float radius;    
- varying vec2 coord;        
+ in vec2 coord;        
  
  float volumeInSphere(vec3 center) {      
     vec3 toCenter = vec3(coord.x * 2.0 - 1.0, 0.0, coord.y * 2.0 - 1.0) - center;      
@@ -19,7 +19,7 @@
     float ymax = min(max(0.0, center.y + dy), ymin + 2.0 * dy);      
     return (ymax - ymin) * 0.1;    
 }        
-
+out vec4 outputF;
 void main() {      
     /* get vertex info */      
     vec4 info = texture2D(texture, coord);            
@@ -28,5 +28,5 @@ void main() {
     
     /* subtract the new volume */
     info.r -= volumeInSphere(newCenter);
-    gl_FragColor = info;
+    outputF = info;
 } 
