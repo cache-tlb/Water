@@ -7,12 +7,14 @@ Shader::Shader(const std::string &vertexSource, const std::string &fragmentSourc
     vsshader.init();
     vsshader.loadShader(VSShaderLib::VERTEX_SHADER, vertexSource);
     vsshader.loadShader(VSShaderLib::FRAGMENT_SHADER, fragmentSource);
+    vsshader.setProgramOutput(0,"outputF");
 
     vsshader.setVertexAttribName(VSShaderLib::VERTEX_COORD_ATTRIB, "LIGHTGLgl_Vertex");
     vsshader.setVertexAttribName(VSShaderLib::TEXTURE_COORD_ATTRIB, "LIGHTGLgl_TexCoord");
     vsshader.setVertexAttribName(VSShaderLib::NORMAL_ATTRIB, "LIGHTGLgl_Normal");
     
     vsshader.prepareProgram();
+    
 }
 
 void Shader::draw(Mesh *mesh) {

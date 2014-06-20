@@ -39,5 +39,11 @@ Cubemap *Cubemap::fromImages(const std::string &xneg, const std::string &xpos, c
     unsigned char* zp = SOIL_load_image(zpos.c_str(), &w[5], &h[5], 0, SOIL_LOAD_RGB);
 
     Cubemap *cubemap = new Cubemap(w, h, xn, xp, yn, yp, zn, zp);
+    SOIL_free_image_data(xn);
+    SOIL_free_image_data(xp);
+    SOIL_free_image_data(yn);
+    SOIL_free_image_data(yp);
+    SOIL_free_image_data(zn);
+    SOIL_free_image_data(zp);
     return cubemap;
 }

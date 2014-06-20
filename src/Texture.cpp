@@ -36,10 +36,22 @@ Texture::Texture(int w, int h, Option &options)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, warpT);
     
     //  NOTICE this sentence
-    if ( type == GL_FLOAT)
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, format, type, NULL);
-    else
-        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, NULL);
+    if ( type == GL_FLOAT){
+        float *f = new float[width*height*4];
+        for (int i = 0; i < width*height*4; i++) {
+            f[i] = 0.f;
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, width, height, 0, format, type, f);
+        delete [] f;
+    }
+    else{
+        unsigned char *uc = new unsigned char[width*height*4];
+        for (int i = 0; i < width*height*4; i++) {
+            uc[i] = 0;
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, type, uc);
+        delete [] uc;
+    }
 
 }
 
@@ -97,12 +109,12 @@ void Texture::preDrawTo(GLint v[4]) {
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, framebuffer);
     glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, renderbuffer);
     GLint renderbuffer_width, renderbuffer_height;
-    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &renderbuffer_width);
-    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &renderbuffer_height);
-    //if (width != renderbuffer_width || height != renderbuffer_height) {
-    // verify this
-    glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, width, height);
-    //}
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &renderbuffer_width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &renderbuffer_height);
+    if (width != renderbuffer_width || height != renderbuffer_height) {
+        // verify this
+        glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT24, width, height);
+    }
     glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, id, 0);
     glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, renderbuffer);
     if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE_EXT) {
@@ -130,7 +142,7 @@ Texture *Texture::fromImage(const std::string &path, Option &options) {
     if (texture->minFilter != GL_NEAREST && texture->minFilter != GL_LINEAR) {
         glGenerateMipmap(GL_TEXTURE_2D);
     }
-    //SOIL_free_image_data(image);
+    SOIL_free_image_data(image);
     return texture;
 }
 
