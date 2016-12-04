@@ -13,16 +13,16 @@ VSOBJS :=  $(addprefix build/,$(notdir $(VSCPPS:.cpp=.o)))
 all:$(TARGET)
 
 build/%.o: src/%.cpp
-        $(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 build/%.o: external/SOIL/%.c
-        $(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 build/%.o: external/vsl/%.cpp
-        $(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 $(TARGET):$(OBJS) $(VSOBJS) $(SOILOBJS)
-        $(CC) -o $@ $^ $(LDFLAGS)
+	$(CC) -o $@ $^ $(LDFLAGS)
 
 
 
