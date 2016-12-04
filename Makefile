@@ -24,7 +24,5 @@ build/%.o: external/vsl/%.cpp
 $(TARGET):$(OBJS) $(VSOBJS) $(SOILOBJS)
 	$(CC) -o $@ $^ $(LDFLAGS)
 
-
-
 clean:
-        rm -rf $(TARGET) build/*.o
+	rm -rf $(TARGET) build/*.o
