@@ -14,8 +14,8 @@
 #include "StdHeader.h"
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include "VSMathlib.h"
-#include "VSShaderlib.h"
+#include "vsMathLib.h"
+#include "vsShaderLib.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Water.h"
