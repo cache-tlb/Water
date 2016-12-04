@@ -13,6 +13,7 @@
 #include <sstream>
 #include <regex>
 #include <climits>
+#include <float.h>
 
 typedef std::map<std::string, std::string> Option;
 
